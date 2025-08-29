@@ -285,6 +285,19 @@ body {
   z-index: 0;
 }
 
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%) translateY(-50%);
+  object-fit: cover;
+  z-index: 0;
+}
+
 .video-overlay {
   position: absolute;
   top: 0;
@@ -292,8 +305,8 @@ body {
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(circle at center, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%),
-    linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.9) 100%);
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.85) 100%),
+    linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
   z-index: 1;
 }
 
@@ -303,7 +316,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 2;
 }
 
 .tech-grid {
@@ -317,7 +330,7 @@ body {
     linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
   background-size: 100px 100px;
   animation: gridMove 20s linear infinite;
-  opacity: 0.3;
+  opacity: 0.2;
 }
 
 @keyframes gridMove {
@@ -338,7 +351,7 @@ body {
   height: 100px;
   background: linear-gradient(to bottom, transparent, #ff0000, transparent);
   animation: codeRain 3s linear infinite;
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
 .code-line:nth-child(1) { left: 10%; animation-delay: 0s; }
@@ -496,47 +509,6 @@ body {
   transform: translateY(-3px);
 }
 
-.scroll-indicator {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  color: rgba(255, 255, 255, 0.6);
-  animation: bounce 2s infinite;
-}
-
-.scroll-mouse {
-  width: 24px;
-  height: 40px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 12px;
-  margin: 0 auto 0.5rem;
-  position: relative;
-}
-
-.scroll-wheel {
-  width: 3px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 2px;
-  position: absolute;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: scrollWheel 2s infinite;
-}
-
-@keyframes scrollWheel {
-  0%, 100% { opacity: 0; transform: translateX(-50%) translateY(0); }
-  50% { opacity: 1; transform: translateX(-50%) translateY(10px); }
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-10px); }
-}
-
 /* Animations */
 @keyframes fadeInUp {
   from {
@@ -591,6 +563,70 @@ section {
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
+}
+
+/* View More Section */
+.view-more-section {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.view-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 0, 0, 0.3);
+  color: #ff0000;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.view-more-btn:hover {
+  background: rgba(255, 0, 0, 0.1);
+  border-color: rgba(255, 0, 0, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 0, 0, 0.2);
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #ff0000, #cc0000);
+  border: none;
+  border-radius: 50%;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
 }
 
 /* Card Styles */
@@ -1524,6 +1560,13 @@ section {
   .about-card,
   .cta-card {
     padding: 2rem;
+  }
+  
+  .scroll-to-top {
+    bottom: 1rem;
+    right: 1rem;
+    width: 48px;
+    height: 48px;
   }
 }
 

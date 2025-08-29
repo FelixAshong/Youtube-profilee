@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 // Custom SVG Icons
@@ -42,6 +42,12 @@ const CustomExternalLinkIcon = ({ size = 16, className = "" }) => (
     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
     <polyline points="15,3 21,3 21,9"/>
     <line x1="10" y1="14" x2="21" y2="3"/>
+  </svg>
+);
+
+const CustomChevronUpIcon = ({ size = 24, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <polyline points="18,15 12,9 6,15"/>
   </svg>
 );
 
@@ -122,6 +128,18 @@ const mockPlaylists = [
 ];
 
 function App() {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Monitor scroll position for scroll-to-top button
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const handleSubscribe = () => {
     window.open('https://www.youtube.com/@dellyknowstech', '_blank');
   };
@@ -132,6 +150,18 @@ function App() {
 
   const handlePlaylistClick = (playlistId) => {
     window.open('https://www.youtube.com/@dellyknowstech', '_blank');
+  };
+
+  const handleViewMoreVideos = () => {
+    window.open('https://www.youtube.com/@dellyknowstech/videos', '_blank');
+  };
+
+  const handleViewMorePlaylists = () => {
+    window.open('https://www.youtube.com/@dellyknowstech/playlists', '_blank');
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -173,6 +203,17 @@ function App() {
       {/* Hero Section */}
       <section id="home" className="hero">
         <div className="hero-video-background">
+          <video 
+            className="hero-video" 
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+            poster="https://images.unsplash.com/photo-1518709268805-4e9042af2176"
+          >
+            <source src="https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_30fps.mp4" type="video/mp4" />
+            <source src="https://videos.pexels.com/video-files/2278095/2278095-uhd_2560_1440_30fps.mp4" type="video/mp4" />
+          </video>
           <div className="video-overlay"></div>
           <div className="animated-background">
             <div className="tech-grid"></div>
@@ -222,13 +263,6 @@ function App() {
               <span>Watch Latest</span>
             </button>
           </div>
-        </div>
-
-        <div className="scroll-indicator">
-          <div className="scroll-mouse">
-            <div className="scroll-wheel"></div>
-          </div>
-          <span>Scroll to explore</span>
         </div>
       </section>
 
@@ -341,6 +375,13 @@ function App() {
               </div>
             ))}
           </div>
+          
+          <div className="view-more-section">
+            <button onClick={handleViewMoreVideos} className="view-more-btn">
+              <span>View More Videos</span>
+              <CustomExternalLinkIcon size={18} />
+            </button>
+          </div>
         </div>
       </section>
 
@@ -388,6 +429,13 @@ function App() {
                 </div>
               </div>
             ))}
+          </div>
+          
+          <div className="view-more-section">
+            <button onClick={handleViewMorePlaylists} className="view-more-btn">
+              <span>View All Playlists</span>
+              <CustomExternalLinkIcon size={18} />
+            </button>
           </div>
         </div>
       </section>
@@ -526,6 +574,15 @@ function App() {
           </div>
         </div>
       </footer>
+
+      {/* Scroll to Top Button */}
+      <button 
+        className={`scroll-to-top ${showScrollTop ? 'visible' : ''}`}
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+      >
+        <CustomChevronUpIcon size={24} />
+      </button>
     </div>
   );
 }
